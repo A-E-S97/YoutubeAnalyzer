@@ -16,7 +16,6 @@ if 'v=' in link:
     start = link.find('v=') + 2
     video_id = link[start: start+11]
 
-print(video_id)
 transcript = ""
 try:
     fetched_transcript = YouTubeTranscriptApi().fetch(video_id)
@@ -26,17 +25,13 @@ except Exception as v:
     print("video_id is not accepted\n", v)
 
 
-print(len(transcript))
-
-
 class ResearchResponse(BaseModel):
     topic: str
     summary: str
-    sources: list[str]
     tools_used: list[str]
     todo: list[str]
     actions_items: list[str]
-nn = "gpt-4o-mini"
+
 llm = ChatOpenAI(model="gpt-5.4", api_key=os.getenv("OPENAI_API_KEY"))
 parser = PydanticOutputParser(pydantic_object=ResearchResponse)
 
@@ -71,9 +66,3 @@ try:
     structured_response = parser.parse(raw_response.get("output"))
 except Exception as e:
     print("Error parsing response", e, "Raw Response: ", raw_response)
-
-print(raw_response)
-
-
-# import sys
-# print([k for k in sys.modules.keys() if 'pydantic.v1' in k])

@@ -1,4 +1,3 @@
-from idlelib.searchengine import search_reverse
 
 from langchain_community.tools import WikipediaQueryRun, DuckDuckGoSearchRun
 from langchain_community.utilities import WikipediaAPIWrapper
